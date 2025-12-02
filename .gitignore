@@ -1,3 +1,28 @@
+# Файлы базы данных
+*.db
+*.sqlite
+*.sqlite3
+
+# Временные файлы
+*.tmp
+*.temp
+
+# Конфиденциальные данные
+*.env
+config.local.*
+secrets.*
+
+# Дампы с реальными данными
+*data_dump*.sql
+*production*.sql
+
+# Папка с данными PostgreSQL (если есть)
+postgres_data/
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
