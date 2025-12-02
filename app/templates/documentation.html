@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏥 Clinic API Documentation</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 Clinic Management System API Documentation</h1>
+            <p>REST API для управления медицинской клиникой</p>
+            <p><strong>Base URL:</strong> <code>http://localhost:8000</code></p>
+        </header>
+
+        <nav class="toc">
+            <h2>📋 Содержание</h2>
+            <ul>
+                <li><a href="#authentication">🔐 Аутентификация</a></li>
+                <li><a href="#doctors">👨‍⚕️ Управление врачами</a></li>
+                <li><a href="#persons">👥 Управление людьми</a></li>
+                <li><a href="#patients">🏥 Управление пациентами</a></li>
+                <li><a href="#medical">📋 Медицинские записи</a></li>
+                <li><a href="#appointments">📅 Записи на прием</a></li>
+                <li><a href="#system">⚙️ Системная информация</a></li>
+                <li><a href="#database">🗃️ Структура базы данных</a></li>
+                <li><a href="#quickstart">🚀 Быстрый старт</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <!-- Аутентификация -->
+            <section id="authentication" class="section">
+                <h2>🔐 Authentication</h2>
+                
+                <div class="endpoint">
+                    <h3>POST <code>/login</code></h3>
+                    <p><strong>Аутентификация врача и получение JWT токена</strong></p>
+                    
+                    <div class="request">
+                        <h4>Request Body:</h4>
+                        <pre><code>{
+  "fio": "Иван Иванов",
+  "license_number": "LIC12345"
+}</code></pre>
+                    </div>
+                    
+                    <div class="response">
+                        <h4>Response:</h4>
+                        <pre><code>{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "token_type": "bearer"
+}</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X POST "http://localhost:8000/login" \
+  -H "Content-Type: application/json" \
+  -d '{"fio": "Иван Иванов", "license_number": "LIC12345"}'</code></pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <h3>POST <code>/register</code></h3>
+                    <p><strong>Проверка регистрации врача в системе</strong></p>
+                    
+                    <div class="request">
+                        <h4>Request Body:</h4>
+                        <pre><code>{
+  "fio": "Иван Иванов", 
+  "license_number": "LIC12345"
+}</code></pre>
+                    </div>
+                    
+                    <div class="response">
+                        <h4>Response:</h4>
+                        <pre><code>{
+  "DoctorID": 1,
+  "FirstName": "Иван",
+  "LastName": "Иванов",
+  "Specialization": "Терапевт", 
+  "LicenseNumber": "LIC12345"
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Управление врачами -->
+            <section id="doctors" class="section">
+                <h2>👨‍⚕️ Doctors Management</h2>
+                
+                <div class="endpoint">
+                    <h3>GET <code>/doctors</code></h3>
+                    <p><strong>Получение списка всех врачей клиники</strong></p>
+                    
+                    <div class="response">
+                        <h4>Response:</h4>
+                        <pre><code>[
+  {
+    "DoctorID": 1,
+    "FirstName": "Иван",
+    "LastName": "Иванов",
+    "Specialization": "Терапевт",
+    "LicenseNumber": "LIC12345"
+  }
+]</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X GET "http://localhost:8000/doctors"</code></pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <h3>GET <code>/doctors/{doctor_id}</code></h3>
+                    <p><strong>Получение информации о конкретном враче по ID</strong></p>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X GET "http://localhost:8000/doctors/1"</code></pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <h3>POST <code>/doctors/</code></h3>
+                    <p><strong>Создание нового врача</strong></p>
+                    
+                    <div class="request">
+                        <h4>Request Body:</h4>
+                        <pre><code>{
+  "PersonID": 1,
+  "Specialization": "Кардиолог",
+  "LicenseNumber": "LIC55555"
+}</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X POST "http://localhost:8000/doctors/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "PersonID": 1,
+    "Specialization": "Кардиолог",
+    "LicenseNumber": "LIC55555"
+  }'</code></pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <h3>POST <code>/doctors/full/</code></h3>
+                    <p><strong>Быстрое создание врача с автоматическим созданием Person записи</strong></p>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X POST "http://localhost:8000/doctors/full/?first_name=Петр&last_name=Сидоров&specialization=Невролог&license_number=LIC66666"</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Управление людьми -->
+            <section id="persons" class="section">
+                <h2>👥 Persons Management</h2>
+                
+                <div class="endpoint">
+                    <h3>POST <code>/persons/</code></h3>
+                    <p><strong>Создание нового человека</strong></p>
+                    
+                    <div class="request">
+                        <h4>Request Body:</h4>
+                        <pre><code>{
+  "FirstName": "Анна",
+  "LastName": "Смирнова",
+  "MiddleName": "Петровна",
+  "DateOfBirth": "1985-03-15",
+  "Gender": "Female",
+  "ContactInfo": "anna@clinic.ru",
+  "Address": "Москва, ул. Центральная, 10"
+}</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X POST "http://localhost:8000/persons/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "FirstName": "Анна",
+    "LastName": "Смирнова"
+  }'</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Управление пациентами -->
+            <section id="patients" class="section">
+                <h2>🏥 Patients Management</h2>
+                
+                <div class="endpoint">
+                    <h3>POST <code>/patients/</code></h3>
+                    <p><strong>Создание нового пациента</strong></p>
+                    
+                    <div class="request">
+                        <h4>Request Body:</h4>
+                        <pre><code>{
+  "PersonID": 2,
+  "InsuranceNumber": "INS33333"
+}</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X POST "http://localhost:8000/patients/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "PersonID": 2,
+    "InsuranceNumber": "INS33333"
+  }'</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Медицинские записи -->
+            <section id="medical" class="section">
+                <h2>📋 Medical Records</h2>
+                
+                <div class="endpoint">
+                    <h3>POST <code>/medical-records/</code></h3>
+                    <p><strong>Создание новой медицинской записи</strong></p>
+                    
+                    <div class="request">
+                        <h4>Request Body:</h4>
+                        <pre><code>{
+  "PatientID": 1,
+  "DoctorID": 1,
+  "Diagnosis": "Гипертония",
+  "Comments": "Назначены препараты"
+}</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X POST "http://localhost:8000/medical-records/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "PatientID": 1,
+    "DoctorID": 1,
+    "Diagnosis": "Гипертония",
+    "Comments": "Назначены препараты"
+  }'</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Записи на прием -->
+            <section id="appointments" class="section">
+                <h2>📅 Appointments</h2>
+                
+                <div class="endpoint">
+                    <h3>POST <code>/appointments/</code></h3>
+                    <p><strong>Создание новой записи на прием</strong></p>
+                    
+                    <div class="request">
+                        <h4>Request Body:</h4>
+                        <pre><code>{
+  "PatientID": 1,
+  "DoctorID": 1,
+  "AppointmentDate": "2024-01-20T10:00:00",
+  "Status": "Scheduled"
+}</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X POST "http://localhost:8000/appointments/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "PatientID": 1,
+    "DoctorID": 1,
+    "AppointmentDate": "2024-01-20T10:00:00",
+    "Status": "Scheduled"
+  }'</code></pre>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <h3>POST <code>/doctor-schedule/</code></h3>
+                    <p><strong>Создание записи в расписании врача</strong></p>
+                    
+                    <div class="request">
+                        <h4>Request Body:</h4>
+                        <pre><code>{
+  "DoctorID": 1,
+  "RecordTime": "2024-01-20T09:00:00",
+  "TaskStatus": "Available"
+}</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X POST "http://localhost:8000/doctor-schedule/" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "DoctorID": 1,
+    "RecordTime": "2024-01-20T09:00:00",
+    "TaskStatus": "Available"
+  }'</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Системная информация -->
+            <section id="system" class="section">
+                <h2>⚙️ System Info</h2>
+                
+                <div class="endpoint">
+                    <h3>GET <code>/</code></h3>
+                    <p><strong>Проверка работоспособности API</strong></p>
+                    
+                    <div class="response">
+                        <h4>Response:</h4>
+                        <pre><code>{
+  "message": "Clinic API is running"
+}</code></pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>cURL Example:</h4>
+                        <pre><code>curl -X GET "http://localhost:8000/"</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Структура базы данных -->
+            <section id="database" class="section">
+                <h2>🗃️ Database Schema</h2>
+                
+                <div class="schema">
+                    <h3>Persons Table</h3>
+                    <pre><code>CREATE TABLE Persons (
+    PersonID SERIAL PRIMARY KEY,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    MiddleName VARCHAR(100),
+    DateOfBirth DATE,
+    Gender VARCHAR(10),
+    ContactInfo VARCHAR(200),
+    Address TEXT
+);</code></pre>
+                </div>
+
+                <div class="schema">
+                    <h3>Doctors Table</h3>
+                    <pre><code>CREATE TABLE Doctors (
+    DoctorID SERIAL PRIMARY KEY,
+    PersonID INTEGER NOT NULL REFERENCES Persons(PersonID),
+    Specialization VARCHAR(100),
+    LicenseNumber VARCHAR(50) UNIQUE
+);</code></pre>
+                </div>
+
+                <div class="schema">
+                    <h3>Patients Table</h3>
+                    <pre><code>CREATE TABLE Patients (
+    PatientID SERIAL PRIMARY KEY,
+    PersonID INTEGER NOT NULL REFERENCES Persons(PersonID),
+    InsuranceNumber VARCHAR(50)
+);</code></pre>
+                </div>
+            </section>
+
+            <!-- Быстрый старт -->
+            <section id="quickstart" class="section">
+                <h2>🚀 Quick Start</h2>
+                
+                <div class="steps">
+                    <h3>1. Запуск сервера</h3>
+                    <pre><code>uvicorn app.main:app --reload --host 0.0.0.0 --port 8000</code></pre>
+                    
+                    <h3>2. Проверка подключения</h3>
+                    <pre><code>curl -X GET "http://localhost:8000/"</code></pre>
+                    
+                    <h3>3. Создание тестовых данных</h3>
+                    <pre><code># Создать человека
+curl -X POST "http://localhost:8000/persons/" \
+  -H "Content-Type: application/json" \
+  -d '{"FirstName": "Иван", "LastName": "Иванов"}'
+
+# Создать врача
+curl -X POST "http://localhost:8000/doctors/" \
+  -H "Content-Type: application/json" \
+  -d '{"PersonID": 1, "Specialization": "Терапевт", "LicenseNumber": "LIC12345"}'
+
+# Получить всех врачей
+curl -X GET "http://localhost:8000/doctors"</code></pre>
+                    
+                    <h3>4. Интерактивная документация</h3>
+                    <p>Посетите: <a href="/docs" target="_blank">http://localhost:8000/docs</a> для Swagger UI</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2024 Clinic Management System. Happy coding! 🚀</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

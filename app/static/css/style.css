@@ -1,0 +1,491 @@
+/* Основные стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Шапка */
+header {
+    background: rgba(255, 255, 255, 0.95);
+    color: #2c3e50;
+    padding: 2rem;
+    border-radius: 15px;
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+
+header code {
+    background: #e8f4f8;
+    color: #c7254e;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+
+/* Навигация */
+.toc {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+}
+
+.toc h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+.toc ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+}
+
+.toc li {
+    margin: 0.3rem 0;
+}
+
+.toc a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: block;
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.toc a:hover {
+    color: #2980b9;
+    background: rgba(52, 152, 219, 0.2);
+    transform: translateX(5px);
+}
+
+.toc a.active {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    font-weight: bold;
+}
+
+/* Секции */
+.section {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+}
+
+.section h2 {
+    color: #2c3e50;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+/* Endpoint блоки */
+.endpoint {
+    background: rgba(248, 249, 250, 0.8);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border-left: 6px solid #3498db;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.endpoint:hover {
+    transform: translateX(10px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.endpoint.get {
+    border-left-color: #27ae60;
+    background: rgba(39, 174, 96, 0.05);
+}
+
+.endpoint.post {
+    border-left-color: #f39c12;
+    background: rgba(243, 156, 18, 0.05);
+}
+
+.endpoint h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.endpoint h3::before {
+    content: "🔗";
+    font-size: 1.2em;
+}
+
+.endpoint.get h3::before {
+    content: "📥";
+}
+
+.endpoint.post h3::before {
+    content: "📤";
+}
+
+.endpoint h4 {
+    color: #7f8c8d;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ecf0f1;
+    padding-bottom: 0.3rem;
+}
+
+/* Code blocks */
+pre {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: #ecf0f1;
+    padding: 1.2rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0.5rem 0;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid #34495e;
+}
+
+code {
+    background: rgba(52, 152, 219, 0.1);
+    color: #c7254e;
+    padding: 0.2rem 0.4rem;
+    border-radius: 5px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-weight: 500;
+}
+
+pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* Стили для схем базы данных */
+.schema {
+    background: rgba(39, 174, 96, 0.05);
+    padding: 1.2rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+    border-left: 4px solid #27ae60;
+    border: 1px solid rgba(39, 174, 96, 0.2);
+}
+
+.schema h3 {
+    color: #27ae60;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+/* Стили для шагов */
+.steps {
+    background: rgba(231, 76, 60, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+.steps h3 {
+    color: #e74c3c;
+    margin: 1.5rem 0 0.8rem 0;
+    font-size: 1.3rem;
+}
+
+.steps h3:first-child {
+    margin-top: 0;
+}
+
+.steps pre {
+    background: #2c3e50;
+    margin: 0.8rem 0;
+}
+
+.steps a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.steps a:hover {
+    text-decoration: underline;
+}
+
+/* Футер */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.endpoint {
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(52, 152, 219, 0.6);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(52, 152, 219, 0.8);
+}
+
+/* Подсветка синтаксиса для JSON */
+pre .property {
+    color: #f8c555;
+}
+
+pre .string {
+    color: #7ec699;
+}
+
+pre .number {
+    color: #f08d49;
+}
+
+pre .boolean {
+    color: #cc99cd;
+}
+
+pre .null {
+    color: #cc99cd;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .section {
+        padding: 1.2rem;
+    }
+    
+    .toc ul {
+        grid-template-columns: 1fr;
+    }
+    
+    pre {
+        font-size: 0.8rem;
+        padding: 1rem;
+    }
+    
+    .endpoint h3 {
+        font-size: 1.1rem;
+    }
+    
+    .endpoint:hover {
+        transform: translateX(5px);
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1.5rem;
+    }
+    
+    header h1 {
+        font-size: 1.6rem;
+    }
+    
+    .section {
+        padding: 1rem;
+    }
+    
+    .endpoint {
+        padding: 1rem;
+    }
+    
+    pre {
+        font-size: 0.75rem;
+    }
+}
+
+/* Эффекты при наведении для интерактивных элементов */
+.toc a, .endpoint, .schema, .steps {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Градиентные границы */
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 15px 15px 0 0;
+}
+
+/* Кастомный скролл для pre */
+pre {
+    scrollbar-width: thin;
+    scrollbar-color: #3498db #2c3e50;
+}
+
+/* Выделение текста */
+::selection {
+    background: rgba(52, 152, 219, 0.3);
+    color: inherit;
+}
+
+::-moz-selection {
+    background: rgba(52, 152, 219, 0.3);
+    color: inherit;
+}
+
+/* Фокус для доступности */
+a:focus, button:focus {
+    outline: 2px solid #3498db;
+    outline-offset: 2px;
+}
+
+/* Загрузка */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Уведомления */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #27ae60;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Темная тема поддержка */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+    }
+    
+    .section, .toc, header {
+        background: rgba(255, 255, 255, 0.95);
+    }
+}
+
+/* Печать */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .section, .toc, header {
+        background: white !important;
+        box-shadow: none !important;
+    }
+    
+    .toc {
+        page-break-after: always;
+    }
+}
